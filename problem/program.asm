@@ -3,6 +3,27 @@
 // eddy.nino@upb.edu.co
 
 (INICIO)
+
+            @16400 
+            D=A
+            @coord 
+            M=D 
+
+            @256
+            D=A
+            @cont 
+            M=D
+
+            @20480 
+            D=A 
+            @segundacoord
+            M=D
+
+            @32
+            D=A 
+            @contdos
+            M=D
+
             @KBD
             D=M 
             @67 
@@ -14,53 +35,57 @@
             D=M 
             @84 
             D=D-A 
-            @SETT
+            @PAINTVERTICAL
             D;JEQ
 
             @INICIO
             0;JMP 
 
-(SETT)
-            @16400 
-            D=A
-            @coord 
-            M=D 
+(PAINTVERTICAL)
 
-            @20480 
-            D=A 
-            @segundacoord
-            M=D
+            @cont
+            D=M
+            @PAINTHORIZONTAL
+            D;JEQ
 
             @256
             D=A
-            @cont 
-            M=D
-            
-            @32
-            D=A 
-            @contdos
-            M=D
-
-            @1
-            D=A
-            @saltodos
+            @coord
+            A=M
             M=D
 
             @32
-            D=A 
-            @salto
-            M=D
-
-            @256
             D=A
-            @color
-            M=D
+            @coord
+            M=M+D
 
-            @colordos
-            M=-1
+            @cont
+            M=M-1
 
-            @RECT
+            @PAINTVERTICAL
             0;JMP
+
+(PAINTHORIZONTAL)
+
+                    @contdos
+                    D=M
+                    @END
+                    D;JEQ
+
+                    @segundacoord
+                    A=M 
+                    M=-1
+
+                    @segundacoord
+                    M=M+1
+
+                    @contdos
+                    M=M-1
+
+
+                    @PAINTHORIZONTAL
+                    0;JMP
+        
 
 (SETCL)
             @16384 
@@ -73,25 +98,20 @@
             @cont 
             M=D
 
-            @1
-            D=A 
             @salto
-            M=D
+            M=1
 
             @color
             M=0
             @RECT
             0;JMP
 
-(RECT)                    
+(RECT)   
+
             @coord 
             D=M
             @pscreen
             M=D 
-            @segundacoord
-            D=M 
-            @pscreendos
-            M=D
 
             @PAINT
             0;JMP
@@ -99,8 +119,7 @@
 (PAINT)
             @cont 
             D=M 
-
-            @PAINTDOS
+            @END
             D;JEQ 
 
             
@@ -110,43 +129,18 @@
             A=M 
             M=D
             
-            @cont 
-            M=M-1
-
             @salto
             D=M
 
             @pscreen
             M=M+D 
+            
+            @cont 
+            M=M-1
 
             @PAINT
             0;JMP
 
-(PAINTDOS)
-
-            @contdos 
-            D=M 
-            @END
-            D;JEQ 
-
-
-            @colordos
-            D=M
-            @pscreendos
-            A=M
-            M=D
-
-            @contdos 
-            M=M-1
-
-            @saltodos
-            D=M
-
-            @pscreendos
-            M=M+D 
-
-            @PAINTDOS
-            0;JMP
 
 (END)
             @INICIO 
