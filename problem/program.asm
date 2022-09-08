@@ -4,6 +4,7 @@
 
 (INICIO)
 
+
             @16400 
             D=A
             @coord 
